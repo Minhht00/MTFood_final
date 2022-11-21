@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+</head>
+
+<body>
+    
+    <div class="scroll-sidebar" th:fragment="left-sidebar">
+ <!-- Sidebar navigation-->
+ <nav class="sidebar-nav">
+    <ul id="sidebarnav">
+        <!-- User Profile-->
+        <li class="sidebar-item pt-2">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" th:href="@{/admin}"
+                aria-expanded="false">
+                <i class="far fa-clock" aria-hidden="true"></i>
+                <span class="hide-menu">Dashboard</span>
+            </a>
+        </li>
+
+
+        <li class="sidebar-item">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" th:href="@{/admin/products}"
+                aria-expanded="false">
+                <i class="fa fa-circle" aria-hidden="true"></i>
+                <span class="hide-menu">Product</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" th:href="@{/admin/categories}"
+                aria-expanded="false">
+                <i class="fa fa-th-large" aria-hidden="true"></i>
+                <span class="hide-menu">Category</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" th:href="@{/admin/accounts}"
+                aria-expanded="false">
+                <i class="fa fa-user-circle" aria-hidden="true"></i>
+                <span class="hide-menu">Account</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" th:href="@{/admin/customers}"
+                aria-expanded="false">
+                <i class="fa fa-address-card" aria-hidden="true"></i>
+                <span class="hide-menu">Customer</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" th:href="@{/admin/orders}"
+                aria-expanded="false">
+                <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                <span class="hide-menu">Order</span>
+            </a>
+        </li>
+     
+    </ul>
+
+</nav>
+    </div>
+</body>
+
+</html>

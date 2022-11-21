@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{./dashboardLayout.html}">
+
+<head>
+    <!-- <meta charset="UTF-8"> -->
+    <title> Product</title>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css"/>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> -->
+</head>
+
+<body>
+    <div class="page-wrapper" layout:fragment="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb bg-white">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title" th:text="${product.isEdit?'Edit Product':'Add New Product'}">Product page
+                    </h4>
+                </div>
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <div class="d-md-flex">
+                        <ol class="breadcrumb ms-auto">
+                            <li><a href="#" class="fw-normal">Dashboard</a></li>
+                        </ol>
+                        <a href="https://www.wrappixel.com/templates/ampleadmin/" target="_blank"
+                            class="btn btn-danger  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white">Upgrade
+                            to Pro</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <!-- Row -->
+            <div class="row">
+                <!-- Column -->
+
+                <!-- Column -->
+                <!-- Column -->
+                <div class="col-lg-9 col-xlg-9 col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form class="form-horizontal form-material" th:action="@{/admin/products/save}"
+                                method="post" enctype="multipart/form-data" th:object="${product}">
+                                <div class="form-group mb-4">
+                                    <label class="col-md-12 p-0">Product-Id</label>
+                                    <div class="col-md-12 border-bottom p-0">
+                                        <input type="text" class="form-control p-0 border-0" placeholder="Id"
+                                            th:field="*{productId}" readonly>
+                                    </div>
+                                    <small id="productIdHid" th:if="${#fields.hasErrors('productId')}"
+                                        class="form-text text-mutted">Product id
+                                        is required</small>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label class="col-md-12 p-0">Name</label>
+                                    <div class="col-md-12 border-bottom p-0">
+                                        <input type="text" class="form-control p-0 border-0" placeholder="Name"
+                                            th:field="*{name}">
+                                    </div>
+                                    <small id="categoryIdHid" th:if="${#fields.hasErrors('name')}"
+                                        class="form-text text-mutted">Name is required
+                                        or invalid</small>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label class="col-md-12 p-0">Quantity</label>
+                                    <div class="col-md-12 border-bottom p-0">
+                                        <input type="text" class="form-control p-0 border-0" placeholder="Quantity"
+                                            th:field="*{quantity}">
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label class="col-md-12 p-0">Unit Price</label>
+                                    <div class="col-md-12 border-bottom p-0">
+                                        <input type="text" class="form-control p-0 border-0" placeholder="Unit Price"
+                                            th:field="*{unitPrice}">
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group mb-4">
+                                    <label class="col-sm-12">Select Category</label>
+
+                                    <div class="col-sm-12 border-bottom">
+                                        <select class="form-select shadow-none p-0 border-0 form-control-line"
+                                            th:field="*{categoryId}">
+                                            <option th:each=" item: ${categories}" th:value="${item.categoryId}"
+                                                th:text="${item.name}"
+                                                th:selected="item.categoryId == product.categoryId">
+                                                Category Name</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
+                                <script>
+                                    function chooseFile(fileInput) {
+                                        if (fileInput.files && fileInput.files[0]) {
+                                            var reader = new FileReader();
+
+                                            reader.onload = function (e) {
+                                                $('#image').attr('src', e.target.result);
+                                            }
+                                            reader.readAsDataURL(fileInput.files[0]);
+                                        }
+                                    }
+                                </script>
+                                <input th:field="*{image}" type="hidden" readonly />
+
+                                <img id="image"
+                                    th:src="${product.image!=null?'/admin/products/images/' + product.image : '/images/noimage.jpg'}"
+                                    src="/images/noimage.jpg" width="25%">
+                                <label>Image File</label>
+                                <div class="form-group mb-4">
+                                    <input type="file" class="form-control-file" placeholder="productImage"
+                                        aria-describedby="productImage" name="imageFile" onchange="chooseFile(this)">
+                                    <small id="productImage" class="form-text text-muted">Produt image is
+                                        required</small>
+                                </div>
+
+                                <div class="form-group mb-4">
+                                    <label class="col-md-12 p-0">Description</label>
+                                    <div class="col-md-12 border-bottom p-0">
+                                        <textarea type="text" class="form-control p-0 border-0"
+                                            placeholder="Description" th:field="*{description}"></textarea>
+                                    </div>
+
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label class="col-sm-12">Select Status</label>
+
+                                    <div class="col-sm-12 border-bottom">
+                                        <select class="form-select shadow-none p-0 border-0 form-control-line"
+                                            name="status" id="status" th:field="*{status}">
+                                            <option value="0">Out of Stock</option>
+                                            <option value="1">On Sale</option>
+                                            <option value="2">Featured</option>
+                                            <option value="3">Bestseller</option>
+                                            <option value="4">Out of order</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <div class="col-sm-12">
+                                        <button class="btn btn-primary"
+                                            th:text="${product.isEdit?'Update':'Save'}">Save</button>
+                                        <a th:href="@{/admin/products}" class="btn btn-success">List Product</a>
+                                        <a th:if="${product.isEdit}"
+                                            th:href="@{'/admin/products/delete/' + ${product.productId}}"
+                                            class="btn btn-danger">Delete</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column -->
+            </div>
+            <!-- Row -->
+            <!-- ============================================================== -->
+            <!-- End PAge Content -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Right sidebar -->
+            <!-- ============================================================== -->
+            <!-- .right-sidebar -->
+            <!-- ============================================================== -->
+            <!-- End Right sidebar -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <footer class="footer text-center"> 2021 © Ample Admin brought to you by <a
+                href="https://www.wrappixel.com/">wrappixel.com</a>
+        </footer>
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+    </div>
+</body>
+
+</html>

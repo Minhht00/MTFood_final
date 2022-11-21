@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{./dashboardLayout.html}">
+
+<head>
+    <!-- <meta charset="UTF-8"> -->
+    <title> Charts</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+
+<body>
+<div class="page-wrapper" layout:fragment="page-wrapper">
+    <div style="margin-left: 30px" class="col-lg-9 col-xlg-9 col-md-12">
+        <h2> Charts </h2>
+        <br>
+        <form th:action="@{/admin}" method="get" id="form_id">
+            <select class="form-select shadow-none p-0 border-0 form-control-line"
+                    name="year" id="year">
+                <option value="2019">2019</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+            </select>
+            <button type="submit" class="btn btn-success">Submit</button>
+        </form>
+<!--        <script type="text/javascript">-->
+<!--            document.getElementById('year').onchange = function(){-->
+<!--                document.getElementById('form_id"').action = '/'+this.value;-->
+<!--            }-->
+
+<!--        </script>-->
+        <br>
+        <div id="chart_div"></div>
+        <div id="piechart" style="width: 900px; height: 500px;"></div>
+    </div>
+    <script th:inline="javascript">
+        // var real_data = /*[[${chartData}]]*/'noValue';
+        var real_data = [[${chartData}]];
+
+        $(document).ready(function() {
+            google.charts.load('current', {
+                packages : [ 'corechart', 'bar' ]
+            });
+            google.charts.setOnLoadCallback(drawColumnChart);
+            google.charts.setOnLoadCallback(drawPieChart);
+        });
+        function drawColumnChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Month');
+            data.addColumn('number', 'Amount');
+            Object.keys(real_data).forEach(function(key) {
+                data.addRow([ key, real_data[key] ]);
+            });
+            var options = {
+                title : 'Total revenue stats',
+                hAxis : {
+                    title : 'Month',
+                },
+                vAxis : {
+                    title : 'Amount'
+                }
+            };
+            var chart = new google.visualization.ColumnChart(document
+                    .getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+
+
+
+
+        function drawPieChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Month');
+            data.addColumn('number', 'Amount');
+            Object.keys(real_data).forEach(function(key) {
+                data.addRow([ key, real_data[key] ]);
+            });
+            var options = {
+                title : 'amount stats'
+            };
+            var chart = new google.visualization.PieChart(document
+                    .getElementById('piechart'));
+            chart.draw(data, options);
+        }
+
+    </script>
+</div>
+<!-- Row -->
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Right sidebar -->
+<!-- ============================================================== -->
+<!-- .right-sidebar -->
+<!-- ============================================================== -->
+<!-- End Right sidebar -->
+<!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- footer -->
+<!-- ============================================================== -->
+<footer class="footer text-center"> 2021 © Ample Admin brought to you by <a
+        href="https://www.wrappixel.com/">wrappixel.com</a>
+</footer>
+<!-- ============================================================== -->
+<!-- End footer -->
+<!-- ============================================================== -->
+</div>
+</body>
+
+</html>
