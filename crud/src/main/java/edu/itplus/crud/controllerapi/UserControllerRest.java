@@ -31,10 +31,10 @@ public class UserControllerRest {
         return repository.findAll();
     }
 
-    @GetMapping("/get-name/{email}")
-    public List<Customer> getUserByName(@PathVariable String email){
-        List<Customer> emailList = repository.findByEmail(email);
-        return emailList;
+    @GetMapping("/get-user/{id}")
+    public List<Customer> getUserById(@PathVariable long id){
+        List<Customer> userList = repository.findById(id);
+        return userList;
     }
 
     @GetMapping("/login/{email}/{password}")

@@ -35,7 +35,7 @@ public class ProductontrollerRest {
     }
 
     @GetMapping("/get-all/{categoryId}")
-    public List<Product> getAllProductById(@PathVariable long categoryId){
+    public List<Product> getAllProductById(@PathVariable int categoryId){
         List<Product> productList = repository.findByCategoryId(categoryId);
         return productList;
     }

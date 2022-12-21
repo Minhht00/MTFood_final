@@ -17,12 +17,12 @@ import com.itplus.mtfood.Adapter.CategoryAdapter;
 import com.itplus.mtfood.Adapter.ProductAdapter;
 import com.itplus.mtfood.Model.CartDetail;
 import com.itplus.mtfood.Model.Category;
-import com.itplus.mtfood.Model.Product;
 import com.itplus.mtfood.Model.User;
 import com.itplus.mtfood.R;
 import com.itplus.mtfood.Remote.APIUtils;
 import com.itplus.mtfood.Remote.CategoryService;
 import com.itplus.mtfood.Remote.ProductService;
+import com.itplus.mtfood.Remote.UserService;
 
 import java.util.List;
 
@@ -34,8 +34,10 @@ public class MainActivity extends AppCompatActivity {
     TextView txtName;
     ImageView categoryPic;
     User user;
+    UserService userService;
     CategoryService categoryService;
     ProductService productService;
+    List<User> listUser;
     List<Category> listCate;
     List<CartDetail> listProduct;
     private RecyclerView.Adapter adapter, adapter2;
@@ -45,12 +47,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        userService = APIUtils.getUserService();
         categoryService = APIUtils.getCategoryService();
         productService = APIUtils.getFoodService();
         Intent data = getIntent();
         String message = data.getStringExtra("email");
         txtName = findViewById(R.id.txtName);
-        txtName.setText("Hi " + message);
+        txtName.setText("XIN CHÀO " + message);
         recyclerViewCategory();
         recyclerViewPopular();
         bottomNavigation();
@@ -59,8 +62,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void bottomNavigation() {
+        Bundle extras = getIntent().getExtras();
         FloatingActionButton floatingActionButton = findViewById(R.id.cartBtn);
         LinearLayout homeBtn = findViewById(R.id.homeBtn);
+        LinearLayout userBtn = findViewById(R.id.profileBtn);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,6 +77,27 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, MainActivity.class));
+            }
+        });
+        userBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Call<List<User>> call = userService.getUserById(Integer.parseInt(extras.getString("id")));
+                call.enqueue(new Callback<List<User>>() {
+                    @Override
+                    public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                        listUser = response.body();
+                        Intent intent = new Intent(MainActivity.this, UserActivity.class);
+                        intent.putExtra("id", String.valueOf(listUser.get(0).getId()));
+                        intent.putExtra("email", String.valueOf(listUser.get(0).getName()));
+                        startActivity(intent);
+                    }
+                    @Override
+                    public void onFailure(Call<List<User>> call, Throwable t) {
+                        Toast.makeText(MainActivity.this, "data does not fetch", Toast.LENGTH_SHORT);
+                    }
+                });
+
             }
         });
     }

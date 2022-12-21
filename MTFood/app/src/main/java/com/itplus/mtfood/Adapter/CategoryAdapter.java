@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.itplus.mtfood.Activity.CategoryActivity;
 import com.itplus.mtfood.Model.Category;
 import com.itplus.mtfood.R;
 import com.squareup.picasso.Picasso;
@@ -42,6 +43,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         holder.name.setText(category.getName());
         String picUrl = context.getResources().getString(R.string.link_img)+category.getImg();
         Picasso.get().load(picUrl).into(holder.img);
+        holder.img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(context, CategoryActivity.class);
+                intent.putExtra("category_id",String.valueOf(category.getId()));
+                context.startActivity(intent);
+            }
+        });
 //        int drawableResourceId = holder.itemView.getContext().getResources().getIdentifier(picUrl, "drawable", holder.itemView.getContext().getPackageName());
 //        Glide.with(holder.itemView.getContext()).load(drawableResourceId).into(holder.img);
     }

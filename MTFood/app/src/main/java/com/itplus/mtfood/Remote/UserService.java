@@ -17,8 +17,8 @@ public interface UserService {
     @GET("user/checkLogin/{email}/{password}")
     Call<List<User>> login(@Path("email") String email, @Path("password") String password);
 
-    @GET("user/get-name/{email}")
-    Call<List<User>> getUserByEmail(@Path("email") String email);
+    @GET("user/get-user/{id}")
+    Call<List<User>> getUserById(@Path("id") int id);
 
     @GET("user/get-all/")
     Call<List<User>> getAllUsers();
@@ -26,8 +26,8 @@ public interface UserService {
     @POST("user/insert/")
     Call<User> addUser(@Body User user);
 
-    @PUT("user/update/{id}")
-    Call<User> updateUser(@Path("id") int id, @Body User user);
+    @PUT("user/update/")
+    Call<User> updateUser(@Body User user);
 
     @DELETE("user/delete/{id}")
     Call<User> deleteUser(@Path("id") int id);

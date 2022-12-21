@@ -4,75 +4,73 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:background="@drawable/card_background"
-    android:elevation="3dp">
+    android:layout_margin="10dp">
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="8dp"
         android:text="Title"
         android:textColor="#373b54"
-        android:textSize="14sp"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/pic"
+        app:layout_constraintTop_toTopOf="@+id/pic" />
 
     <ImageView
         android:id="@+id/pic"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="164dp"
+        android:layout_height="149dp"
         android:src="@drawable/pop_1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        tools:layout_editor_absoluteX="4dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <TextView
         android:id="@+id/fee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="24dp"
         android:text="0.0"
         android:textColor="#373b54"
-        android:textSize="14sp"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/pic"
-        app:layout_constraintStart_toStartOf="@+id/pic"
-        app:layout_constraintTop_toBottomOf="@+id/pic" />
+        app:layout_constraintStart_toEndOf="@+id/pic"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <TextView
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
         android:text="VNĐ"
         android:textColor="#FF3D00"
-        android:textSize="14sp"
+        android:textSize="18sp"
         android:textStyle="normal"
-        app:layout_constraintBottom_toBottomOf="@+id/fee"
         app:layout_constraintStart_toEndOf="@+id/fee"
-        app:layout_constraintTop_toBottomOf="@+id/pic" />
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <TextView
         android:id="@+id/btnAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_width="92dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="68dp"
         android:background="@drawable/orange_button"
         android:paddingStart="10dp"
         android:paddingTop="3dp"
         android:paddingEnd="10dp"
         android:paddingBottom="3dp"
         android:text="+Thêm"
+        android:textAlignment="center"
         android:textColor="#ffffff"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/pic"
-        app:layout_constraintStart_toStartOf="@+id/pic"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/pic"
+        app:layout_constraintStart_toEndOf="@+id/pic"
         app:layout_constraintTop_toBottomOf="@+id/fee"
+        app:layout_constraintVertical_bias="1.0"
         tools:textStyle="bold" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
