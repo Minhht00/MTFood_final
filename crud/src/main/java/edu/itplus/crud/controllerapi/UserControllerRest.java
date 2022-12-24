@@ -101,7 +101,7 @@ public class UserControllerRest {
 
     @PutMapping("/update")
     public boolean updateById(@RequestBody Customer customer){
-        repository.save(customer);
+        customerService.save(customer);
         return true;
     }
 }

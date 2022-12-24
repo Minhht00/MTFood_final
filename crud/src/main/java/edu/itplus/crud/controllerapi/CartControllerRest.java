@@ -1,5 +1,6 @@
 package edu.itplus.crud.controllerapi;
 
+import edu.itplus.crud.domain.Customer;
 import edu.itplus.crud.domain.Order;
 import edu.itplus.crud.domain.Product;
 import edu.itplus.crud.model.ResponseObject;
@@ -23,6 +24,12 @@ public class CartControllerRest {
     @GetMapping("/get-all")
     public List<Order> getAllProduct(){
         return repository.findAll();
+    }
+
+    @GetMapping("/get-cart/{id}")
+    public List<Order> getOrderListById(@PathVariable long id){
+        List<Order> orderList = repository.findByCustomerId(id);
+        return orderList;
     }
     @PostMapping("/insert")
     public ResponseEntity<ResponseObject> insert(@RequestBody Order order){

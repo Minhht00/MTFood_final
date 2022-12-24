@@ -10,10 +10,14 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface CartService {
     @GET("cart/get-all/")
     Call<List<Cart>> getAllCart();
+
+    @GET("cart/get-cart/{id}")
+    Call<List<Cart>> getAllCartById(@Path("id") int id);
 
     @POST("cart/insert/")
     Call<Cart> addCart(@Body Cart cart);

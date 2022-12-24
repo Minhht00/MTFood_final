@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -55,5 +56,12 @@ public class AdminLoginController {
 
         //đường dẫn mặc định khi đăng nhập xong
         return new ModelAndView("forward:/categories",model);
+    }
+    @RequestMapping(value = "/logout")
+    public String logout(HttpSession session) {
+        if (session != null) {
+            session.removeAttribute("username");
+        }
+        return "redirect:/admin";
     }
 }

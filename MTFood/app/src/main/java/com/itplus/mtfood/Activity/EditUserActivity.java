@@ -23,7 +23,7 @@ import retrofit2.Response;
 
 public class EditUserActivity extends AppCompatActivity {
     private UserService userService;
-    private EditText edtUserName, edtUserAddress;
+    private EditText edtUserName, edtUserAddress, edtPass;
     private Button btnEdit;
     List<User> listUser;
 
@@ -35,10 +35,12 @@ public class EditUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_user);
         edtUserName = findViewById(R.id.edtUserName);
         edtUserAddress = findViewById(R.id.edtUserAddress);
+        edtPass = findViewById(R.id.edtPass);
         btnEdit = findViewById(R.id.btnEdit);
 
         edtUserName.setText(extras.getString("name"));
         edtUserAddress.setText(extras.getString("address"));
+
         int id = Integer.parseInt(extras.getString("id"));
 
         btnEdit.setOnClickListener(new View.OnClickListener() {
@@ -50,16 +52,29 @@ public class EditUserActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                         listUser = response.body();
-                        User user = new User();
-                        user.setId(listUser.get(0).getId());
-                        user.setName(edtUserName.getText().toString());
-                        user.setAddress(edtUserAddress.getText().toString());
-                        user.setEmail(listUser.get(0).getEmail());
-                        user.setPassword(listUser.get(0).getPassword());
-                        updateUser(user);
-                        Intent intent = new Intent(EditUserActivity.this, UserActivity.class);
-                        intent.putExtra("id", String.valueOf(listUser.get(0).getId()));
-                        startActivity(intent);
+                        if (edtPass.getText() != null && edtPass.getText().length() > 0) {
+                            User user = new User();
+                            user.setId(listUser.get(0).getId());
+                            user.setName(edtUserName.getText().toString());
+                            user.setAddress(edtUserAddress.getText().toString());
+                            user.setEmail(listUser.get(0).getEmail());
+                            user.setPassword(edtPass.getText().toString());
+                            updateUser(user);
+                            Intent intent = new Intent(EditUserActivity.this, UserActivity.class);
+                            intent.putExtra("id", String.valueOf(listUser.get(0).getId()));
+                            startActivity(intent);
+                        } else {
+                            User user = new User();
+                            user.setId(listUser.get(0).getId());
+                            user.setName(edtUserName.getText().toString());
+                            user.setAddress(edtUserAddress.getText().toString());
+                            user.setEmail(listUser.get(0).getEmail());
+                            user.setPassword(listUser.get(0).getPassword());
+                            updateUser(user);
+                            Intent intent = new Intent(EditUserActivity.this, UserActivity.class);
+                            intent.putExtra("id", String.valueOf(listUser.get(0).getId()));
+                            startActivity(intent);
+                        }
 
                     }
                     @Override

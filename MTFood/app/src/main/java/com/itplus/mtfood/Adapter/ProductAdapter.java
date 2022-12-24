@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,15 +20,19 @@ import com.itplus.mtfood.Model.Product;
 import com.itplus.mtfood.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> implements Filterable {
     private List<CartDetail> productList;
+    private List<CartDetail> productListOld;
     private Context context;
 
     public ProductAdapter(@NonNull Context context, @NonNull List<CartDetail> product) {
         this.context = context;
         this.productList = product;
+        this.productListOld = product;
     }
 
     @Override
@@ -64,6 +70,36 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public int getItemCount() {
         return productList.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String keyword = charSequence.toString();
+                if (keyword.isEmpty()) {
+                    productList = productListOld;
+                } else {
+                    List<CartDetail> list = new ArrayList<>();
+                    for (CartDetail cd : productListOld) {
+                        if (cd.getName().toLowerCase().contains(keyword.toLowerCase())) {
+                            list.add(cd);
+                        }
+                    }
+                    productList = list;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = productList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                productList = (List<CartDetail>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

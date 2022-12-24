@@ -1,13 +1,17 @@
 package com.itplus.mtfood.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,16 +36,41 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     TextView txtName;
-    ImageView categoryPic;
-    User user;
+    EditText edtSearch;
+    SearchView searchView;
     UserService userService;
     CategoryService categoryService;
     ProductService productService;
     List<User> listUser;
     List<Category> listCate;
     List<CartDetail> listProduct;
-    private RecyclerView.Adapter adapter, adapter2;
+    private ProductAdapter productAdapter;
     private RecyclerView recyclerViewCategoryList, recyclerViewPopularList;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                productAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                productAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,14 +81,32 @@ public class MainActivity extends AppCompatActivity {
         productService = APIUtils.getFoodService();
         Intent data = getIntent();
         String message = data.getStringExtra("email");
+//        searchView = findViewById(R.id.searchView);
+//        searchView.clearFocus();
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                filterList(newText);
+//                return true;
+//            }
+//        });
         txtName = findViewById(R.id.txtName);
-        txtName.setText("XIN CHÀO " + message);
+        txtName.setText("XIN CHÀO");
+
         recyclerViewCategory();
         recyclerViewPopular();
         bottomNavigation();
 
-
     }
+
+    private void filterList(String newText) {
+    }
+
 
     private void bottomNavigation() {
         Bundle extras = getIntent().getExtras();
@@ -121,17 +168,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "data does not fetch", Toast.LENGTH_SHORT);
             }
         });
-
-
-//        ArrayList<Category> category = new ArrayList<>();
-//        category.add(new Category("Pizza","cat_1"));
-//        category.add(new Category("Burger","cat_2"));
-//        category.add(new Category("Hotdog","cat_3"));
-//        category.add(new Category("Drink","cat_4"));
-//        category.add(new Category("Donut","cat_5"));
-//        category.add(new Category("Donut","cat_5"));
-//        adapter = new CategoryAdapter(category);
-//        recyclerViewCategoryList.setAdapter(adapter);
     }
 
     private void recyclerViewPopular() {
@@ -154,5 +190,14 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "data does not fetch", Toast.LENGTH_SHORT);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!searchView.isIconified()) {
+            searchView.setIconified(true);
+            return;
+        }
+        super.onBackPressed();
     }
 }

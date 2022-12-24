@@ -40,6 +40,12 @@ public class ProductontrollerRest {
         return productList;
     }
 
+    @GetMapping("/get-name/{name}")
+    public List<Product> getAllProductByName(@PathVariable String name){
+        List<Product> productList = repository.findByNameContaining(name);
+        return productList;
+    }
+
     @GetMapping("/files/{fileName:.+}")
     // /files/06a290064eb94a02a58bfeef36002483.png
     public ResponseEntity<byte[]> readDetailFile(@PathVariable String fileName) {

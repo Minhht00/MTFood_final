@@ -34,6 +34,8 @@ public interface OrderService {
 
     List<Order> findByOrderId(Long id);
 
+    List<Order> findByCustomerId(Long id);
+
     List<Order> findAll();
 
     List<Order> findAll(Sort sort);

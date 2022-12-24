@@ -43,7 +43,8 @@ public class CategoryActivity extends AppCompatActivity {
         userService = APIUtils.getUserService();
         btnBack = findViewById(R.id.btnBack);
         recyclerViewProduct();
-        Call<List<User>> call = userService.getAllUsers();
+        Bundle extras = getIntent().getExtras();
+        Call<List<User>> call = userService.getUserById(Integer.parseInt(extras.getString("category_id")));
         call.enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {

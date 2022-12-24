@@ -20,6 +20,8 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
 //    EntityManager em = this.em;
 
     List<Order> findByOrderId(Long id);
+
+    List<Order> findByCustomerId(Long id);
 //    SELECT MONTH(o.order_date),SUM(o.amount) FROM orders o GROUP BY MONTH(o.order_date)
 //    @Query(value = " SELECT new edu.itplus.crud.model.Amount(MONTH(o.order_date),SUM(o.amount)) FROM orders o GROUP BY MONTH(o.order_date)",
 //            nativeQuery = true)

@@ -32,7 +32,7 @@ public class UserActivity extends AppCompatActivity {
     private UserService userService;
     List<User> listUser;
     private RecyclerView recyclerViewUserList;
-    Button editBtn;
+    Button editBtn, hisBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,39 +45,9 @@ public class UserActivity extends AppCompatActivity {
         txtAddressUser = findViewById(R.id.txtAddressUser);
         bottomNavigation();
         editBtn = findViewById(R.id.editBtn);
+        hisBtn = findViewById(R.id.hisBtn);
+
         recyclerViewUser();
-
-    }
-
-    private void recyclerViewUser() {
-        Bundle extras = getIntent().getExtras();
-
-        Call<List<User>> call = userService.getUserById(Integer.parseInt(extras.getString("id")));
-        call.enqueue(new Callback<List<User>>() {
-            @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                listUser = response.body();
-                txtNameUser.setText(listUser.get(0).getName());
-                txtAddressUser.setText(listUser.get(0).getAddress());
-                txtName.setText("XIN CHÀO " + listUser.get(0).getName());
-                editBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(UserActivity.this, EditUserActivity.class);
-                        intent.putExtra("id", String.valueOf(listUser.get(0).getId()));
-                        intent.putExtra("name", String.valueOf(listUser.get(0).getName()));
-                        intent.putExtra("address", String.valueOf(listUser.get(0).getAddress()));
-                        startActivity(intent);
-                    }
-                });
-            }
-
-
-            @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
-                Toast.makeText(UserActivity.this, "data does not fetch", Toast.LENGTH_SHORT);
-            }
-        });
 
     }
     private void bottomNavigation() {
@@ -120,4 +90,45 @@ public class UserActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void recyclerViewUser() {
+        Bundle extras = getIntent().getExtras();
+
+        Call<List<User>> call = userService.getUserById(Integer.parseInt(extras.getString("id")));
+        call.enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                listUser = response.body();
+                txtNameUser.setText(listUser.get(0).getName());
+                txtAddressUser.setText(listUser.get(0).getAddress());
+                txtName.setText("XIN CHÀO " + listUser.get(0).getName());
+                editBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(UserActivity.this, EditUserActivity.class);
+                        intent.putExtra("id", String.valueOf(listUser.get(0).getId()));
+                        intent.putExtra("name", String.valueOf(listUser.get(0).getName()));
+                        intent.putExtra("address", String.valueOf(listUser.get(0).getAddress()));
+                        startActivity(intent);
+                    }
+                });
+                hisBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(UserActivity.this, HistoryBuyActivity.class);
+                        intent.putExtra("id", String.valueOf(listUser.get(0).getId()));
+                        startActivity(intent);
+                    }
+                });
+            }
+
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                Toast.makeText(UserActivity.this, "data does not fetch", Toast.LENGTH_SHORT);
+            }
+        });
+
+    }
+
 }

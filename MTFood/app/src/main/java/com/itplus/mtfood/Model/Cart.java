@@ -16,6 +16,9 @@ public class Cart {
     @SerializedName("address")
     @Expose
     private String address;
+    @SerializedName("status")
+    @Expose
+    private int status;
 
     public Cart() {
     }
@@ -56,5 +59,13 @@ public class Cart {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

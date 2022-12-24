@@ -18,9 +18,9 @@
             android:layout_height="1201dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView3"
-            app:layout_constraintVertical_bias="0.849"
+            app:layout_constraintVertical_bias="0.761"
             app:srcCompat="@drawable/background"
-            tools:layout_editor_absoluteX="-112dp" />
+            tools:layout_editor_absoluteX="-129dp" />
 
         <ImageView
             android:id="@+id/imageView3"
@@ -81,8 +81,9 @@
             android:ems="10"
             android:hint="Nhập địa chỉ"
             android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/edtUserName"
+            app:layout_constraintHorizontal_bias="0.532"
+            app:layout_constraintStart_toStartOf="@+id/edtUserName"
             app:layout_constraintTop_toBottomOf="@+id/edtUserName" />
 
         <Button
@@ -94,10 +95,23 @@
             android:textSize="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.429"
+            app:layout_constraintHorizontal_bias="0.49"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edtUserAddress"
-            app:layout_constraintVertical_bias="0.096" />
+            app:layout_constraintTop_toBottomOf="@+id/edtPass"
+            app:layout_constraintVertical_bias="0.224" />
+
+        <EditText
+            android:id="@+id/edtPass"
+            android:layout_width="320dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="36dp"
+            android:ems="10"
+            android:hint="Nhập mật khẩu"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="@+id/edtUserAddress"
+            app:layout_constraintHorizontal_bias="0.027"
+            app:layout_constraintStart_toStartOf="@+id/edtUserAddress"
+            app:layout_constraintTop_toBottomOf="@+id/edtUserAddress" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
